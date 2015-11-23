@@ -34,11 +34,11 @@ describe("./src/jstrs.js", function () {
     assert.equal(printValue, "red: 2"); printValue = undefined;
   });
   it("encodeUTF8():base", function () {
-    print(jstrs.encodeUTF8('汉'));
-    assert.equal(printValue, "æ±"); printValue = undefined;
+    print(encodeURI(jstrs.encodeUTF8('汉')));
+    assert.equal(printValue, "%C3%A6%C2%B1%C2%89"); printValue = undefined;
   });
   it("decodeUTF8():base", function () {
-    print(jstrs.decodeUTF8('æ±'));
+    print(jstrs.decodeUTF8(decodeURI("%C3%A6%C2%B1%C2%89")));
     assert.equal(printValue, "汉"); printValue = undefined;
   });
   it("decodeHTML():base", function () {

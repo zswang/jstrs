@@ -84,8 +84,8 @@
    '''<example>'''
    * @example encodeUTF8():base
     ```js
-    console.log(jstrs.encodeUTF8('汉'));
-    // > æ±
+    console.log(encodeURI(jstrs.encodeUTF8('汉')));
+    // > %C3%A6%C2%B1%C2%89
     ```
    '''</example>'''
    */
@@ -106,7 +106,7 @@
    '''<example>'''
    * @example decodeUTF8():base
     ```js
-    console.log(jstrs.decodeUTF8('æ±'));
+    console.log(jstrs.decodeUTF8(decodeURI("%C3%A6%C2%B1%C2%89")));
     // > 汉
     ```
    '''</example>'''
