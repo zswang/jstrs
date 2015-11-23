@@ -1,0 +1,32 @@
+{
+  "name": "jstrs",
+  "version": "0.0.1",
+  "homepage": "https://github.com/zswang/jstrs",
+  "authors": {
+    "name": "zswang",
+    "url": "http://weibo.com/zswang"
+  },
+  "description": "String functions",
+  "main": "jstrs.js",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "string",
+    "function",
+    "utf-8",
+    "unicode"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "tests",
+    "src",
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/components",
+    "test",
+    "tests"
+  ]
+}
