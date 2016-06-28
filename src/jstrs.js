@@ -240,7 +240,7 @@
     case 'string':
       return JSON.stringify(value);
     case 'number':
-      return isNaN(value) ? 'NaN' : String(value)
+      return isNaN(value) ? 'NaN' : String(value);
     case 'object':
       if (value === null) {
         return 'null';
@@ -324,7 +324,7 @@
     if (typeof f !== 'string') {
       return [].slice.call(arguments).map(function (item) {
         return util_inspect(item);
-      }).join(' ')
+      }).join(' ');
     }
 
     var argLen = arguments.length;
