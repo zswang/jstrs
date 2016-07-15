@@ -1,11 +1,7 @@
 {
   "name": "jstrs",
-  "version": "0.0.29",
+  "version": "0.0.36",
   "homepage": "https://github.com/zswang/jstrs",
-  "authors": {
-    "name": "zswang",
-    "url": "http://weibo.com/zswang"
-  },
   "description": "String functions",
   "main": "jstrs.js",
   "moduleType": [
