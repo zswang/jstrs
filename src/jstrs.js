@@ -70,12 +70,14 @@
    '''</example>'''
    */
   function format(template, json) {
+    /*<funcTemplate>*/
     if (typeof template === 'function') { // 函数多行注释处理
       template = String(template).replace(
         /[^]*\/\*!?\s*|\s*\*\/[^]*/g, // 替换掉函数前后部分
         ''
       );
     }
+    /*</funcTemplate>*/
     return template.replace(/#\{(.*?)\}/g, function (all, key) {
       return json && (key in json) ? json[key] : "";
     });
