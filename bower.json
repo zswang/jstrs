@@ -1,6 +1,6 @@
 {
   "name": "jstrs",
-  "version": "0.0.37",
+  "version": "0.1.1",
   "homepage": "https://github.com/zswang/jstrs",
   "description": "String functions",
   "main": "jstrs.js",

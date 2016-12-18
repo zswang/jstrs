@@ -28,6 +28,19 @@ describe("src/jstrs.js", function () {
     }));
     assert.equal(examplejs_printLines.join("\n"), " -- red"); examplejs_printLines = [];
   });
+  it("format():function", function() {
+    examplejs_printLines = [];
+    // "*" 替换成 "*"
+    examplejs_print(jstrs.format(function () {
+    /*
+      #{color}: #{level}
+    */
+    }, {
+      color: 'red',
+      level: 2
+    }));
+    assert.equal(examplejs_printLines.join("\n"), "red: 2"); examplejs_printLines = [];
+  });
   it("encodeUTF8():base", function() {
     examplejs_printLines = [];
     examplejs_print(encodeURI(jstrs.encodeUTF8('汉')));
@@ -50,8 +63,8 @@ describe("src/jstrs.js", function () {
   });
   it("decodeHTML():base", function() {
     examplejs_printLines = [];
-    examplejs_print(jstrs.decodeHTML('1&nbsp;&lt;&nbsp;2'));
-    assert.equal(examplejs_printLines.join("\n"), "1 < 2"); examplejs_printLines = [];
+    examplejs_print(jstrs.decodeHTML('&#39;1&#39;&nbsp;&lt;&nbsp;&#34;2&quot;'));
+    assert.equal(examplejs_printLines.join("\n"), "'1' < \"2\""); examplejs_printLines = [];
   });
   it("decodeHTML():hex", function() {
     examplejs_printLines = [];
@@ -60,8 +73,8 @@ describe("src/jstrs.js", function () {
   });
   it("encodeHTML():base", function() {
     examplejs_printLines = [];
-    examplejs_print(jstrs.encodeHTML('1 < 2'));
-    assert.equal(examplejs_printLines.join("\n"), "1&nbsp;&lt;&nbsp;2"); examplejs_printLines = [];
+    examplejs_print(jstrs.encodeHTML('\'1\' < "2"'));
+    assert.equal(examplejs_printLines.join("\n"), "&#39;1&#39;&nbsp;&lt;&nbsp;&#34;2&#34;"); examplejs_printLines = [];
   });
   it("util_format():base", function() {
     examplejs_printLines = [];

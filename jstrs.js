@@ -6,8 +6,8 @@
    * String functions
    * @author
    *   zswang (http://weibo.com/zswang)
-   * @version 0.0.37
-   * @date 2016-07-20
+   * @version 0.1.1
+   * @date 2016-12-18
    */
   /*<function name="format">*/
   /**
@@ -130,7 +130,7 @@
     'lt': '<',
     'gt': '>',
     'amp': '&',
-    'nbsp': ' '
+    'nbsp': ' '
   };
   /**
    * HTML解码
@@ -139,8 +139,8 @@
    '''<example>'''
    * @example decodeHTML():base
     ```js
-    console.log(jstrs.decodeHTML('1&nbsp;&lt;&nbsp;2'));
-    // > 1 < 2
+    console.log(jstrs.decodeHTML('&#39;1&#39;&nbsp;&lt;&nbsp;&#34;2&quot;'));
+    // > '1' < "2"
     ```
    * @example decodeHTML():hex
     ```js
@@ -163,11 +163,12 @@
   exports.decodeHTML = decodeHTML;
   /*<function name="encodeHTML">*/
   var htmlEncodeDict = {
-    '"': 'quot',
+    '"': '#34',
+    "'": '#39',
     '<': 'lt',
     '>': 'gt',
     '&': 'amp',
-    ' ': 'nbsp'
+    ' ': 'nbsp'
   };
   /**
    * HTML编码
@@ -176,13 +177,13 @@
    '''<example>'''
    * @example encodeHTML():base
     ```js
-    console.log(jstrs.encodeHTML('1 < 2'));
-    // > 1&nbsp;&lt;&nbsp;2
+    console.log(jstrs.encodeHTML('\'1\' < "2"'));
+    // > &#39;1&#39;&nbsp;&lt;&nbsp;&#34;2&#34;
     ```
    '''</example>'''
    */
   function encodeHTML(text) {
-    return String(text).replace(/["<>& ]/g, function (all) {
+    return String(text).replace(/["<>& ']/g, function (all) {
       return '&' + htmlEncodeDict[all] + ';';
     });
   }
@@ -386,6 +387,7 @@
   }
   /*</function>*/
   exports.camelCase = camelCase;
+  /* istanbul ignore next */
   if (typeof define === 'function') {
     if (define.amd || define.cmd) {
       define(function () {

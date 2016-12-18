@@ -23,6 +23,9 @@ gulp.task('build', function() {
 
 gulp.task('example', function() {
   return gulp.src('src/**.js')
+    .pipe(jdists({
+      trigger: 'example'
+    }))
     .pipe(examplejs({
       header: "var jstrs = require('../');\n"
     }))
