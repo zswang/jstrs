@@ -1,5 +1,22 @@
+
 var jstrs = require('../');
 
+global.atob = function atob(str) {
+  return new Buffer(str, 'base64').toString('binary');
+}
+
+global.btoa = function btoa(str) {
+  var buffer;
+
+  if (str instanceof Buffer) {
+    buffer = str;
+  } else {
+    buffer = new Buffer(str.toString(), 'binary');
+  }
+
+  return buffer.toString('base64');
+}
+      
 describe("src/jstrs.js", function () {
   var assert = require('should');
   var util = require('util');
@@ -27,6 +44,18 @@ describe("src/jstrs.js", function () {
       color: 'red'
     }));
     assert.equal(examplejs_printLines.join("\n"), " -- red"); examplejs_printLines = [];
+  });
+  it("format():function", function() {
+    examplejs_printLines = [];
+    examplejs_print(jstrs.format(function () {
+    /*
+      #{color}: #{level}
+    */
+    }, {
+      color: 'red',
+      level: 2
+    }));
+    assert.equal(examplejs_printLines.join("\n"), "red: 2"); examplejs_printLines = [];
   });
   it("encodeUTF8():base", function() {
     examplejs_printLines = [];
@@ -134,5 +163,23 @@ describe("src/jstrs.js", function () {
     examplejs_printLines = [];
     examplejs_print(JSON.stringify(jstrs.camelCase(123)));
     assert.equal(examplejs_printLines.join("\n"), "123"); examplejs_printLines = [];
+  });
+  it("base64URIDecode():base", function() {
+    examplejs_printLines = [];
+     examplejs_print(jstrs.base64URIDecode('RmFzdENHSSBQcm9jZXNzIE1hbmFnZXI'));
+     assert.equal(examplejs_printLines.join("\n"), "FastCGI Process Manager"); examplejs_printLines = [];
+     examplejs_print(jstrs.base64URIDecode('WnN3YW5n'));
+     assert.equal(examplejs_printLines.join("\n"), "Zswang"); examplejs_printLines = [];
+     examplejs_print(jstrs.base64URIDecode('byjila_ilqHilbApbw'));
+     assert.equal(examplejs_printLines.join("\n"), "o(╯□╰)o"); examplejs_printLines = [];
+  });
+  it("base64URIEncode():base", function() {
+    examplejs_printLines = [];
+     examplejs_print(jstrs.base64URIEncode('FastCGI Process Manager'));
+     assert.equal(examplejs_printLines.join("\n"), "RmFzdENHSSBQcm9jZXNzIE1hbmFnZXI"); examplejs_printLines = [];
+     examplejs_print(jstrs.base64URIEncode('Zswang'));
+     assert.equal(examplejs_printLines.join("\n"), "WnN3YW5n"); examplejs_printLines = [];
+     examplejs_print(jstrs.base64URIEncode('o(╯□╰)o'));
+     assert.equal(examplejs_printLines.join("\n"), "byjila_ilqHilbApbw"); examplejs_printLines = [];
   });
 });

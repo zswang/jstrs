@@ -1,4 +1,4 @@
-(function (exportName) {
+(function(exportName) {
   var exports = exports || {};
   /**
    * @file jstrs
@@ -6,8 +6,8 @@
    * String functions
    * @author
    *   zswang (http://weibo.com/zswang)
-   * @version 0.0.37
-   * @date 2016-07-20
+   * @version 0.0.46
+   * @date 2017-01-07
    */
   /*<function name="format">*/
   /**
@@ -37,9 +37,8 @@
     // >  -- red
     ```
    * @example format():function
-   '''<jdists encoding="regex" pattern="/~/g" replacement="*" trigger="example">'''
+   '''<jdists encoding="regex" pattern="/~/g" replacement="*" trigger="example" desc="~ 替换成 *">'''
     ```js
-    // "~" 替换成 "*"
     console.log(jstrs.format(function () {
     /~
       #{color}: #{level}
@@ -62,7 +61,7 @@
       );
     }
     /*</funcTemplate>*/
-    return template.replace(/#\{(.*?)\}/g, function (all, key) {
+    return template.replace(/#\{(.*?)\}/g, function(all, key) {
       return json && (key in json) ? json[key] : "";
     });
   }
@@ -152,7 +151,7 @@
   function decodeHTML(html) {
     return String(html).replace(
       /&((quot|lt|gt|amp|nbsp)|#x([a-f\d]+)|#(\d+));/ig,
-      function (all, group, key, hex, dec) {
+      function(all, group, key, hex, dec) {
         return key ? htmlDecodeDict[key.toLowerCase()] :
           hex ? String.fromCharCode(parseInt(hex, 16)) :
           String.fromCharCode(+dec);
@@ -182,7 +181,7 @@
    '''</example>'''
    */
   function encodeHTML(text) {
-    return String(text).replace(/["<>& ]/g, function (all) {
+    return String(text).replace(/["<>& ]/g, function(all) {
       return '&' + htmlEncodeDict[all] + ';';
     });
   }
@@ -201,8 +200,7 @@
   function util_tryStringify(arg) {
     try {
       return JSON.stringify(arg);
-    }
-    catch (_) {
+    } catch (_) {
       return '[Circular]';
     }
   }
@@ -214,31 +212,31 @@
       return '[...]';
     }
     switch (typeof value) {
-    case 'function':
-      return '[Function]';
-    case 'string':
-      return JSON.stringify(value);
-    case 'number':
-      return isNaN(value) ? 'NaN' : String(value);
-    case 'object':
-      if (value === null) {
-        return 'null';
-      }
-      if (Array.isArray(value)) {
-        return '[' + value.slice(0, 10).map(function (item) {
-          return util_inspect(item, depth + 1);
-        }).join(',') + ']';
-      }
-      if (value.addEventListener) { // DOM
+      case 'function':
+        return '[Function]';
+      case 'string':
+        return JSON.stringify(value);
+      case 'number':
+        return isNaN(value) ? 'NaN' : String(value);
+      case 'object':
+        if (value === null) {
+          return 'null';
+        }
+        if (Array.isArray(value)) {
+          return '[' + value.slice(0, 10).map(function(item) {
+            return util_inspect(item, depth + 1);
+          }).join(',') + ']';
+        }
+        if (value.addEventListener) { // DOM
+          return String(value);
+        }
+        var text = [];
+        Object.keys(value).forEach(function(key) {
+          text.push(key + ':' + util_inspect(value[key], depth + 1));
+        });
+        return '{' + text.join(',') + '}';
+      default:
         return String(value);
-      }
-      var text = [];
-      Object.keys(value).forEach(function (key) {
-        text.push(key + ':' + util_inspect(value[key], depth + 1));
-      });
-      return '{' + text.join(',') + '}';
-    default:
-      return String(value);
     }
   }
   /*</function>*/
@@ -300,7 +298,7 @@
    */
   function util_format(f) {
     if (typeof f !== 'string') {
-      return [].slice.call(arguments).map(function (item) {
+      return [].slice.call(arguments).map(function(item) {
         return util_inspect(item);
       }).join(' ');
     }
@@ -310,27 +308,26 @@
       return f;
     }
     var a = 1;
-    var str = f.replace(/%([%dsj])/g, function (all, flag) {
+    var str = f.replace(/%([%dsj])/g, function(all, flag) {
       if (a >= argLen) {
         return all;
       }
       switch (flag) {
-      case '%':
-        return '%';
-      case 'd':
-        return Number(argv[a++]);
-      case 'j':
-        return util_tryStringify(argv[a++]);
-      case 's':
-        return String(argv[a++]);
+        case '%':
+          return '%';
+        case 'd':
+          return Number(argv[a++]);
+        case 'j':
+          return util_tryStringify(argv[a++]);
+        case 's':
+          return String(argv[a++]);
       }
     });
     while (a < argLen) {
       var x = arguments[a++];
       if (x === null || typeof x !== 'object') {
         str += ' ' + x;
-      }
-      else {
+      } else {
         str += ' ' + util_inspect(x);
       }
     }
@@ -378,7 +375,7 @@
     }
     var result = text.toLowerCase();
     if (text.indexOf('_') >= 0 || text.indexOf('-') >= 0) {
-      result = result.replace(/[-_]+([a-z])/ig, function (all, letter) {
+      result = result.replace(/[-_]+([a-z])/ig, function(all, letter) {
         return letter.toUpperCase();
       });
     }
@@ -386,17 +383,64 @@
   }
   /*</function>*/
   exports.camelCase = camelCase;
+  /*<function name="base64URIDecode" depend="decodeUTF8">*/
+  /**
+   * 进行 bas64 解码
+   *
+   * @param {string} data base64 字符
+   * @return {string} 返回解码后的内容
+   * @example base64URIDecode():base
+     ```js
+     console.log(jstrs.base64URIDecode('RmFzdENHSSBQcm9jZXNzIE1hbmFnZXI'));
+     // > FastCGI Process Manager
+     console.log(jstrs.base64URIDecode('WnN3YW5n'));
+     // > Zswang
+     console.log(jstrs.base64URIDecode('byjila_ilqHilbApbw'));
+     // > o(╯□╰)o
+     ```
+   */
+  function base64URIDecode(data) {
+    return decodeUTF8(atob(String(data).replace('-', '+').replace('_', '/')));
+  }
+  /*</function>*/
+  exports.base64URIDecode = base64URIDecode;
+  /*<function name="base64URIDecode" depend="encodeUTF8">*/
+  /**
+   * 进行 bas64 编码
+   *
+   * @param {string} data 字符串
+   * @return {string} 返回编码后的内容
+   * @example base64URIEncode():base
+     ```js
+     console.log(jstrs.base64URIEncode('FastCGI Process Manager'));
+     // > RmFzdENHSSBQcm9jZXNzIE1hbmFnZXI
+     console.log(jstrs.base64URIEncode('Zswang'));
+     // > WnN3YW5n
+     console.log(jstrs.base64URIEncode('o(╯□╰)o'));
+     // > byjila_ilqHilbApbw
+     ```
+   */
+  function base64URIEncode(data) {
+    return btoa(encodeUTF8(data)).replace(/[+/=]/g, function(all) {
+      return {
+        '+': '-',
+        '/': '_',
+        '=': ''
+      }[all];
+    });
+  }
+  /*</function>*/
+  exports.base64URIEncode = base64URIEncode;
+  /* istanbul ignore next */
   if (typeof define === 'function') {
     if (define.amd || define.cmd) {
-      define(function () {
+      define(function() {
         return exports;
       });
     }
-  }
-  else if (typeof module !== 'undefined' && module.exports) {
+  } else if (typeof module !== 'undefined' && module.exports) {
     module.exports = exports;
-  }
-  else {
+  } else {
     window[exportName] = exports;
   }
 })('jstrs');

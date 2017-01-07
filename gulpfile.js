@@ -23,8 +23,29 @@ gulp.task('build', function() {
 
 gulp.task('example', function() {
   return gulp.src('src/**.js')
+    .pipe(jdists({
+      trigger: 'example'
+    }))
     .pipe(examplejs({
-      header: "var jstrs = require('../');\n"
+      header: `
+var jstrs = require('../');
+
+global.atob = function atob(str) {
+  return new Buffer(str, 'base64').toString('binary');
+}
+
+global.btoa = function btoa(str) {
+  var buffer;
+
+  if (str instanceof Buffer) {
+    buffer = str;
+  } else {
+    buffer = new Buffer(str.toString(), 'binary');
+  }
+
+  return buffer.toString('base64');
+}
+      `
     }))
     .pipe(gulp.dest('test'));
 });
