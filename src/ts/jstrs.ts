@@ -23,7 +23,7 @@ import { decodeUTF8, encodeUTF8 } from './utf8'
 import { decodeHTML, encodeHTML } from './html'
 import { base64URIDecode, base64URIEncode } from './url'
 
-let jstrs = {
+export default {
   format,
   encodeUTF8,
   decodeUTF8,
@@ -33,8 +33,4 @@ let jstrs = {
   camelCase,
   base64URIDecode,
   base64URIEncode,
-}
-
-export {
-  jstrs
 }

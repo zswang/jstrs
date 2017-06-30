@@ -46,7 +46,7 @@
     "mocha": "mocha",
     "dist": "npm run _update_version && npm run example && npm run _dist && npm run test",
 
-    "cctv": "rollup -c rollup.config.js"
+    "cctv": "rollup -c rollup.config.js -o jstrs3.js"
   },
   "files": [
     "jstrs.js"
