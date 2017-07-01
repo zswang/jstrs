@@ -9,7 +9,7 @@
   console.log(jstrs.format('#{0} #{1}', [1, 2]));
   // > 1 2
   ```
-  * @example format():object
+ * @example format():object
   ```js
   console.log(jstrs.format('#{level} -- #{color}', {
     color: 'red',
@@ -17,15 +17,29 @@
   }));
   // > 2 -- red
   ```
-  * @example format():undefined
+ * @example format():undefined
   ```js
   console.log(jstrs.format('#{level} -- #{color}', {
     color: 'red'
   }));
   // >  -- red
   ```
+ * @example format():function
+  '''<jdists encoding="regex" pattern="/~/g" replacement="*" trigger="example" desc="~ 替换成 *">'''
+  ```js
+  console.log(jstrs.format(function () {
+  /~
+    #{color}: #{level}
+  ~/
+  }, {
+    color: 'red',
+    level: 2
+  }));
+  // > red: 2
+  ```
+  '''</jdists>'''
   '''</example>'''
-  */
+ */
 declare function format(template: string, json: {
     [key: string]: any;
 }): string;

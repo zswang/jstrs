@@ -33,6 +33,9 @@
   '''</example>'''
   */
 function camelCase(text: string) {
+  if (typeof text !== 'string') { // 非字符串直接返回
+    return text
+  }
   let result = text.toLowerCase()
   if (text.indexOf('_') >= 0 || text.indexOf('-') >= 0) {
     result = result.replace(/[-_]+([a-z])/ig, function (...params: string[]) {
