@@ -1,5 +1,4 @@
 /*<function name="encodeUTF8">*/
-declare function unescape(s: string): string
 /**
  * 对字符串进行 utf8 编码
  *
@@ -20,11 +19,9 @@ function encodeUTF8(str: string): string {
     return unescape(encodeURIComponent(str))
   }
   return str
-}
-/*</function>*/
+} /*</function>*/
 
 /*<function name="decodeUTF8">*/
-declare function escape(s: string): string
 /**
  * 对 utf8 字符串进行解码
  *
@@ -46,10 +43,12 @@ function decodeUTF8(str: string): string {
     return decodeURIComponent(escape(str))
   }
   return str
-}
-/*</function>*/
+} /*</function>*/
 
 export {
   encodeUTF8,
   decodeUTF8,
 }
+
+declare function unescape(s: string): string
+declare function escape(s: string): string

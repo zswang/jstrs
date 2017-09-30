@@ -25,6 +25,24 @@ describe("lib/jstrs.js", function () {
     examplejs_printLines.push(util.format.apply(util, arguments));
   }
 
+  it("base64URIDecode():base", function() {
+    examplejs_printLines = [];
+       examplejs_print(jstrs.base64URIDecode('RmFzdENHSSBQcm9jZXNzIE1hbmFnZXI'))
+       assert.equal(examplejs_printLines.join("\n"), "FastCGI Process Manager"); examplejs_printLines = [];
+       examplejs_print(jstrs.base64URIDecode('WnN3YW5n'))
+       assert.equal(examplejs_printLines.join("\n"), "Zswang"); examplejs_printLines = [];
+       examplejs_print(jstrs.base64URIDecode('byjila_ilqHilbApbw'))
+       assert.equal(examplejs_printLines.join("\n"), "o(╯□╰)o"); examplejs_printLines = [];
+  });
+  it("base64URIEncode():base", function() {
+    examplejs_printLines = [];
+       examplejs_print(jstrs.base64URIEncode('FastCGI Process Manager'))
+       assert.equal(examplejs_printLines.join("\n"), "RmFzdENHSSBQcm9jZXNzIE1hbmFnZXI"); examplejs_printLines = [];
+        examplejs_print(jstrs.base64URIEncode('Zswang'))
+        assert.equal(examplejs_printLines.join("\n"), "WnN3YW5n"); examplejs_printLines = [];
+        examplejs_print(jstrs.base64URIEncode('o(╯□╰)o'))
+        assert.equal(examplejs_printLines.join("\n"), "byjila_ilqHilbApbw"); examplejs_printLines = [];
+  });
   it("camelCase():base", function() {
     examplejs_printLines = [];
       examplejs_print(jstrs.camelCase('box-width'))
@@ -96,24 +114,6 @@ describe("lib/jstrs.js", function () {
     examplejs_printLines = [];
       examplejs_print(jstrs.encodeHTML('\'1\' < "2"'))
       assert.equal(examplejs_printLines.join("\n"), "&#39;1&#39;&nbsp;&lt;&nbsp;&#34;2&#34;"); examplejs_printLines = [];
-  });
-  it("base64URIDecode():base", function() {
-    examplejs_printLines = [];
-       examplejs_print(jstrs.base64URIDecode('RmFzdENHSSBQcm9jZXNzIE1hbmFnZXI'))
-       assert.equal(examplejs_printLines.join("\n"), "FastCGI Process Manager"); examplejs_printLines = [];
-       examplejs_print(jstrs.base64URIDecode('WnN3YW5n'))
-       assert.equal(examplejs_printLines.join("\n"), "Zswang"); examplejs_printLines = [];
-       examplejs_print(jstrs.base64URIDecode('byjila_ilqHilbApbw'))
-       assert.equal(examplejs_printLines.join("\n"), "o(╯□╰)o"); examplejs_printLines = [];
-  });
-  it("base64URIEncode():base", function() {
-    examplejs_printLines = [];
-       examplejs_print(jstrs.base64URIEncode('FastCGI Process Manager'))
-       assert.equal(examplejs_printLines.join("\n"), "RmFzdENHSSBQcm9jZXNzIE1hbmFnZXI"); examplejs_printLines = [];
-        examplejs_print(jstrs.base64URIEncode('Zswang'))
-        assert.equal(examplejs_printLines.join("\n"), "WnN3YW5n"); examplejs_printLines = [];
-        examplejs_print(jstrs.base64URIEncode('o(╯□╰)o'))
-        assert.equal(examplejs_printLines.join("\n"), "byjila_ilqHilbApbw"); examplejs_printLines = [];
   });
   it("encodeUTF8():base", function() {
     examplejs_printLines = [];

@@ -20,8 +20,7 @@ import { decodeUTF8, encodeUTF8 } from './utf8'
  */
 function base64URIDecode(data: string): string {
   return decodeUTF8(atob(String(data).replace('-', '+').replace('_', '/')))
-}
-/*</function>*/
+} /*</function>*/
 
 /*<function name="base64URIDecode" depend="encodeUTF8">*/
 /**
@@ -52,8 +51,7 @@ function base64URIEncode(data: string): string {
   return btoa(encodeUTF8(data)).replace(/[+/=]/g, (all) => {
     return dict[all]
   })
-}
-/*</function>*/
+} /*</function>*/
 
 export {
   base64URIDecode,

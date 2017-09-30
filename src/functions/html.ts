@@ -38,8 +38,7 @@ function decodeHTML(html: string): string {
           String.fromCharCode(+dec)
     }
   )
-}
-/*</function>*/
+} /*</function>*/
 
 /*<function name="encodeHTML">*/
 let htmlEncodeDict: {
@@ -66,8 +65,7 @@ function encodeHTML(text: string): string {
   return text.replace(/["<>& ']/g, (all) => {
     return '&' + htmlEncodeDict[all] + ';'
   })
-}
-/*</function>*/
+} /*</function>*/
 
 export {
   encodeHTML,

@@ -1,6 +1,6 @@
 {
   "name": "jstrs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "https://github.com/zswang/jstrs",
   "description": "String functions",
   "main": "lib/jstrs.js",
@@ -16,7 +16,6 @@
   ],
   "license": "MIT",
   "ignore": [
-    "tests",
     "src",
     "**/.*",
     "node_modules",

@@ -53,8 +53,7 @@ function format(template: string | Function, json: { [key: string]: any }): stri
     let key = params[1]
     return json && (key in json) ? json[key] : ''
   })
-}
-/*</function>*/
+} /*</function>*/
 
 export {
   format,

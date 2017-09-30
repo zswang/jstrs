@@ -42,8 +42,7 @@ function camelCase(text: string): string {
     })
   }
   return result
-}
-/*</function>*/
+} /*</function>*/
 
 export {
   camelCase,
