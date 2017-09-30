@@ -2,9 +2,9 @@
   "name": "jstrs",
   "title": "String functions",
   "description": "String functions",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "homepage": "http://github.com/zswang/jstrs",
-  "main": "lib/jstrs",
+  "main": "lib/jstrs.js",
   "typings": "lib/jstrs.d.ts",
   "author": {
     "name": "zswang",

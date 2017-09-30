@@ -115,6 +115,11 @@ describe("lib/jstrs.js", function () {
       examplejs_print(jstrs.encodeHTML('\'1\' < "2"'))
       assert.equal(examplejs_printLines.join("\n"), "&#39;1&#39;&nbsp;&lt;&nbsp;&#34;2&#34;"); examplejs_printLines = [];
   });
+  it("encodeHTML():number", function() {
+    examplejs_printLines = [];
+      examplejs_print(jstrs.encodeHTML(1.2))
+      assert.equal(examplejs_printLines.join("\n"), "1.2"); examplejs_printLines = [];
+  });
   it("encodeUTF8():base", function() {
     examplejs_printLines = [];
       examplejs_print(encodeURI(jstrs.encodeUTF8('汉')))

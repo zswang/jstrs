@@ -4,7 +4,7 @@
  * String functions
  * @author
  *   zswang (http://weibo.com/zswang)
- * @version 1.0.1
+ * @version 1.0.3
  * @date 2017-09-30
   */
 /*<function name="base64URIDecode" depend="decodeUTF8">*/
@@ -225,9 +225,14 @@ let htmlEncodeDict: {
   console.log(jstrs.encodeHTML('\'1\' < "2"'))
   // > &#39;1&#39;&nbsp;&lt;&nbsp;&#34;2&#34;
   ```
+ * @example encodeHTML():number
+  ```js
+  console.log(jstrs.encodeHTML(1.2))
+  // > 1.2
+  ```
   */
 function encodeHTML(text: string): string {
-  return text.replace(/["<>& ']/g, (all) => {
+  return String(text).replace(/["<>& ']/g, (all) => {
     return '&' + htmlEncodeDict[all] + ';'
   })
 } /*</function>*/

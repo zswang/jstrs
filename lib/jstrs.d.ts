@@ -4,7 +4,7 @@
  * String functions
  * @author
  *   zswang (http://weibo.com/zswang)
- * @version 1.0.1
+ * @version 1.0.3
  * @date 2017-09-30
   */
 /**
@@ -141,6 +141,11 @@ declare function decodeHTML(html: string): string;
   ```js
   console.log(jstrs.encodeHTML('\'1\' < "2"'))
   // > &#39;1&#39;&nbsp;&lt;&nbsp;&#34;2&#34;
+  ```
+ * @example encodeHTML():number
+  ```js
+  console.log(jstrs.encodeHTML(1.2))
+  // > 1.2
   ```
   */
 declare function encodeHTML(text: string): string;

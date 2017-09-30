@@ -60,9 +60,14 @@ let htmlEncodeDict: {
   console.log(jstrs.encodeHTML('\'1\' < "2"'))
   // > &#39;1&#39;&nbsp;&lt;&nbsp;&#34;2&#34;
   ```
+ * @example encodeHTML():number
+  ```js
+  console.log(jstrs.encodeHTML(1.2))
+  // > 1.2
+  ```
   */
 function encodeHTML(text: string): string {
-  return text.replace(/["<>& ']/g, (all) => {
+  return String(text).replace(/["<>& ']/g, (all) => {
     return '&' + htmlEncodeDict[all] + ';'
   })
 } /*</function>*/
