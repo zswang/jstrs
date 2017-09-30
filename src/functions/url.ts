@@ -1,4 +1,6 @@
+/*<remove>*/
 import { decodeUTF8, encodeUTF8 } from './utf8'
+/*</remove>*/
 
 /*<function name="base64URIDecode" depend="decodeUTF8">*/
 /**
@@ -8,15 +10,15 @@ import { decodeUTF8, encodeUTF8 } from './utf8'
  * @return 返回解码后的内容
  * @example base64URIDecode():base
    ```js
-   console.log(jstrs.base64URIDecode('RmFzdENHSSBQcm9jZXNzIE1hbmFnZXI'));
+   console.log(jstrs.base64URIDecode('RmFzdENHSSBQcm9jZXNzIE1hbmFnZXI'))
    // > FastCGI Process Manager
-   console.log(jstrs.base64URIDecode('WnN3YW5n'));
+   console.log(jstrs.base64URIDecode('WnN3YW5n'))
    // > Zswang
-   console.log(jstrs.base64URIDecode('byjila_ilqHilbApbw'));
+   console.log(jstrs.base64URIDecode('byjila_ilqHilbApbw'))
    // > o(╯□╰)o
    ```
  */
-function base64URIDecode(data: string) {
+function base64URIDecode(data: string): string {
   return decodeUTF8(atob(String(data).replace('-', '+').replace('_', '/')))
 }
 /*</function>*/
@@ -29,27 +31,27 @@ function base64URIDecode(data: string) {
  * @return 返回编码后的内容
  * @example base64URIEncode():base
    ```js
-   console.log(jstrs.base64URIEncode('FastCGI Process Manager'));
+   console.log(jstrs.base64URIEncode('FastCGI Process Manager'))
    // > RmFzdENHSSBQcm9jZXNzIE1hbmFnZXI
 
-    console.log(jstrs.base64URIEncode('Zswang'));
+    console.log(jstrs.base64URIEncode('Zswang'))
     // > WnN3YW5n
 
-    console.log(jstrs.base64URIEncode('o(╯□╰)o'));
+    console.log(jstrs.base64URIEncode('o(╯□╰)o'))
     // > byjila_ilqHilbApbw
     ```
   */
-function base64URIEncode(data: string) {
+function base64URIEncode(data: string): string {
   let dict: {
     [key: string]: string
   } = {
-    '+': '-',
-    '/': '_',
-    '=': ''
-  }
+      '+': '-',
+      '/': '_',
+      '=': ''
+    }
   return btoa(encodeUTF8(data)).replace(/[+/=]/g, (all) => {
-    return dict[all];
-  });
+    return dict[all]
+  })
 }
 /*</function>*/
 

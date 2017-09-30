@@ -1,11 +1,15 @@
 import typescript from 'rollup-plugin-typescript2';
+import jdists from 'rollup-plugin-jdists'
 
 export default {
-	entry: './src/ts/jstrs.ts',
+	entry: './src/jstrs.ts',
   format: 'umd',
   moduleName: 'jstrs',
 
 	plugins: [
-		typescript()
+    jdists({
+      clean: true,
+    }),
+		typescript(),
 	]
 }

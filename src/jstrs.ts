@@ -17,20 +17,9 @@
   */
 /*</jdists>*/
 
-import { camelCase } from './camel'
-import { format, util_format } from './format'
-import { decodeUTF8, encodeUTF8 } from './utf8'
-import { decodeHTML, encodeHTML } from './html'
-import { base64URIDecode, base64URIEncode } from './url'
-
-export default {
-  format,
-  encodeUTF8,
-  decodeUTF8,
-  decodeHTML,
-  encodeHTML,
-  util_format,
-  camelCase,
-  base64URIDecode,
-  base64URIEncode,
-}
+/*<jdists encoding="glob" pattern="functions/*.ts" export="#functions" />*/
+/*<jdists encoding="jhtmls" data="#functions">
+forEach(function (filename) {
+  !#{'<!--'}jdists import="!#{filename}"!#{'/-->'}
+})
+</jdists>*/

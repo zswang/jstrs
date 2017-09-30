@@ -1,53 +1,79 @@
 /*jshint globalstrict: true*/
 /*global require*/
 
-'use strict';
+'use strict'
 
-var gulp = require('gulp');
-var util = require('util');
-var jdists = require('gulp-jdists');
-var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
-var examplejs = require('gulp-examplejs');
+const gulp = require('gulp')
+const util = require('util')
+const replace = require('gulp-replace')
+const uglify = require('gulp-uglify')
+const rename = require('gulp-rename')
+const jdists = require('gulp-jdists')
+const typescript = require('gulp-typescript')
+const examplejs = require('gulp-examplejs')
+const pkg = require('./package')
+const merge2 = require('merge2')
 
-gulp.task('build', function() {
-  return gulp.src(['src/jstrs.js'])
-    .pipe(jdists({
-      trigger: 'release'
+gulp.task('build', function () {
+  var tsResult = gulp.src('src/*.ts')
+    .pipe(jdists())
+    .pipe(gulp.dest('lib'))
+    .pipe(typescript({
+      target: 'ES5',
+      declaration: true,
+      module: 'umd',
     }))
-    .pipe(gulp.dest('./'))
-    .pipe(uglify())
-    .pipe(rename('jstrs.min.js'))
-    .pipe(gulp.dest('./'));
-});
 
-gulp.task('example', function() {
-  return gulp.src('src/**.js')
+  return merge2([
+    tsResult.dts.pipe(gulp.dest('lib')),
+    tsResult.js
+      .pipe(replace(
+        /(\(function\s*\()(factory\)\s*\{)/, '$1root, $2\n    /* istanbul ignore next */'
+      ))
+      .pipe(replace(
+        /(define\(\["require",\s*"exports"\],\s*factory\);\s*\})/, '$1 else { factory(null, root["' + pkg.name + '"] = {}); }'
+      ))
+      .pipe(replace(
+        /(\s*\}\s*\)\s*\()(function\s*\(require,\s*exports\)\s*\{)/, '$1this, $2'
+      ))
+      .pipe(gulp.dest('lib'))
+  ])
+})
+
+gulp.task('uglify', function () {
+  gulp.src(`lib/${pkg.name}.js`)
+    .pipe(uglify())
+    .pipe(rename(`${pkg.name}.min.js`))
+    .pipe(gulp.dest('lib'))
+})
+
+gulp.task('example', function () {
+  return gulp.src('lib/jstrs.js')
     .pipe(jdists({
       trigger: 'example'
     }))
     .pipe(examplejs({
       header: `
-var jstrs = require('../');
+const jstrs = require('../')
 
 global.atob = function atob(str) {
-  return new Buffer(str, 'base64').toString('binary');
+  return new Buffer(str, 'base64').toString('binary')
 }
 
 global.btoa = function btoa(str) {
-  var buffer;
+  var buffer
 
   if (str instanceof Buffer) {
-    buffer = str;
+    buffer = str
   } else {
-    buffer = new Buffer(str.toString(), 'binary');
+    buffer = new Buffer(str.toString(), 'binary')
   }
 
-  return buffer.toString('base64');
+  return buffer.toString('base64')
 }
       `
     }))
-    .pipe(gulp.dest('test'));
-});
+    .pipe(gulp.dest('test'))
+})
 
-gulp.task('default', ['build']);
+gulp.task('dist', ['build', 'example', 'uglify'])

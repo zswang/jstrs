@@ -2,9 +2,10 @@
   "name": "jstrs",
   "title": "String functions",
   "description": "String functions",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "homepage": "http://github.com/zswang/jstrs",
-  "main": "jstrs.js",
+  "main": "lib/jstrs",
+  "typing": "lib/jstrs.d.ts",
   "author": {
     "name": "zswang",
     "url": "http://weibo.com/zswang"
@@ -27,28 +28,26 @@
   "devDependencies": {
     "gulp": "^3.9.0",
     "gulp-examplejs": "^0.0.5",
-    "gulp-jdists": "^2.0.0",
     "gulp-rename": "^1.2.2",
+    "gulp-replace": "^0.6.1",
+    "gulp-typescript": "^3.2.2",
     "gulp-uglify": "^1.5.3",
     "istanbul": "^0.3.17",
     "jshint": "2.5.8",
+    "merge2": "^1.2.0",
     "mocha": "^2.0.1",
-    "rollup": "^0.43.0",
-    "rollup-plugin-typescript2": "^0.4.4",
-    "should": "^4.1.0"
+    "should": "^4.1.0",
+    "typescript": "^2.5.3"
   },
   "scripts": {
     "_update_version": "node version.js",
-    "_dist": "gulp",
-    "lint": "jshint src/*.js",
+    "_dist": "gulp dist",
     "test": "istanbul cover --hook-run-in-context node_modules/mocha/bin/_mocha -- -R spec",
     "example": "gulp example",
     "mocha": "mocha",
-    "dist": "npm run _update_version && npm run example && npm run _dist && npm run test",
-
-    "cctv": "rollup -c rollup.config.js -o jstrs3.js"
+    "dist": "npm run _update_version && npm run example && npm run test"
   },
   "files": [
-    "jstrs.js"
+    "lib"
   ]
 }
