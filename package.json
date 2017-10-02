@@ -45,7 +45,7 @@
     "test": "istanbul cover --hook-run-in-context node_modules/mocha/bin/_mocha -- -R spec",
     "example": "gulp example",
     "mocha": "mocha",
-    "dist": "npm run _update_version && npm run _dist && npm run example && npm run test"
+    "dist": "npm run _update_version && npm run _dist && npm run test"
   },
   "files": [
     "lib"
