@@ -47,6 +47,15 @@ describe("lib/jstrs.js", function () {
     examplejs_printLines = [];
       examplejs_print(jstrs.camelCase('box-width'))
       assert.equal(examplejs_printLines.join("\n"), "boxWidth"); examplejs_printLines = [];
+      examplejs_print(jstrs.camelCase('boxWidth'))
+      assert.equal(examplejs_printLines.join("\n"), "boxWidth"); examplejs_printLines = [];
+  });
+  it("camelCase():Upper", function() {
+    examplejs_printLines = [];
+      examplejs_print(jstrs.camelCase('FOÈ-BAR'))
+      assert.equal(examplejs_printLines.join("\n"), "foèBar"); examplejs_printLines = [];
+      examplejs_print(jstrs.camelCase('FBBazzy'))
+      assert.equal(examplejs_printLines.join("\n"), "fbBazzy"); examplejs_printLines = [];
   });
   it("camelCase():Upper & _", function() {
     examplejs_printLines = [];
@@ -56,7 +65,7 @@ describe("lib/jstrs.js", function () {
   it("camelCase():First char is _", function() {
     examplejs_printLines = [];
       examplejs_print(jstrs.camelCase('_BOX_WIDTH'))
-      assert.equal(examplejs_printLines.join("\n"), "BoxWidth"); examplejs_printLines = [];
+      assert.equal(examplejs_printLines.join("\n"), "boxWidth"); examplejs_printLines = [];
   });
   it("camelCase():none", function() {
     examplejs_printLines = [];

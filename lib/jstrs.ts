@@ -4,8 +4,8 @@
  * String functions
  * @author
  *   zswang (http://weibo.com/zswang)
- * @version 1.0.4
- * @date 2017-09-30
+ * @version 1.1.0
+ * @date 2017-11-03
   */
 /*<function name="base64URIDecode" depend="decodeUTF8">*/
 /**
@@ -68,6 +68,15 @@ export {
   ```js
   console.log(jstrs.camelCase('box-width'))
   // > boxWidth
+  console.log(jstrs.camelCase('boxWidth'))
+  // > boxWidth
+  ```
+  * @example camelCase():Upper
+  ```js
+  console.log(jstrs.camelCase('FOÈ-BAR'))
+  // > foèBar
+  console.log(jstrs.camelCase('FBBazzy'))
+  // > fbBazzy
   ```
   * @example camelCase():Upper & _
   ```js
@@ -77,7 +86,7 @@ export {
   * @example camelCase():First char is _
   ```js
   console.log(jstrs.camelCase('_BOX_WIDTH'))
-  // > BoxWidth
+  // > boxWidth
   ```
   * @example camelCase():none
   ```js
@@ -94,14 +103,15 @@ function camelCase(text: string): string {
   if (typeof text !== 'string') { // 非字符串直接返回
     return text
   }
-  let result = text.toLowerCase()
-  if (text.indexOf('_') >= 0 || text.indexOf('-') >= 0) {
-    result = result.replace(/[-_]+([a-z])/ig, (...params: string[]) => {
-      let letter = params[1]
-      return letter.toUpperCase()
+  return text.replace(/([a-z][^A-Z]*)([A-Z])|([A-Z])([A-Z][a-z])/g, (all, $1, $2, $3, $4) => {
+    all
+    return ($1 || $3) + '-' + ($2 || $4)
+  }).replace(/^[_.\- ]+/, '')
+    .toLowerCase()
+    .replace(/[_.\- ]+(\w|$)/g, (all, $1) => {
+      all
+      return $1.toUpperCase()
     })
-  }
-  return result
 } /*</function>*/
 export {
   camelCase,

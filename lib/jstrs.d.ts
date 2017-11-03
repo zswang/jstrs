@@ -4,8 +4,8 @@
  * String functions
  * @author
  *   zswang (http://weibo.com/zswang)
- * @version 1.0.4
- * @date 2017-09-30
+ * @version 1.1.0
+ * @date 2017-11-03
   */
 /**
  * 进行 bas64 解码
@@ -49,6 +49,15 @@ export { base64URIDecode, base64URIEncode };
   ```js
   console.log(jstrs.camelCase('box-width'))
   // > boxWidth
+  console.log(jstrs.camelCase('boxWidth'))
+  // > boxWidth
+  ```
+  * @example camelCase():Upper
+  ```js
+  console.log(jstrs.camelCase('FOÈ-BAR'))
+  // > foèBar
+  console.log(jstrs.camelCase('FBBazzy'))
+  // > fbBazzy
   ```
   * @example camelCase():Upper & _
   ```js
@@ -58,7 +67,7 @@ export { base64URIDecode, base64URIEncode };
   * @example camelCase():First char is _
   ```js
   console.log(jstrs.camelCase('_BOX_WIDTH'))
-  // > BoxWidth
+  // > boxWidth
   ```
   * @example camelCase():none
   ```js

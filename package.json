@@ -2,7 +2,7 @@
   "name": "jstrs",
   "title": "String functions",
   "description": "String functions",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "homepage": "http://github.com/zswang/jstrs",
   "main": "lib/jstrs",
   "typings": "lib/jstrs.d.ts",
@@ -45,7 +45,7 @@
     "test": "istanbul cover --hook-run-in-context node_modules/mocha/bin/_mocha -- -R spec",
     "example": "gulp example",
     "mocha": "mocha",
-    "dist": "npm run _update_version && npm run _dist && npm run test"
+    "dist": "npm run _update_version && npm run example && npm run _dist && npm run test"
   },
   "files": [
     "lib"

@@ -4,10 +4,21 @@
  *
  * @param text 字符串
  * @return 返回驼峰字符串
+ * @see https://github.com/sindresorhus/camelcase
  * @example camelCase():base
   ```js
   console.log(jstrs.camelCase('box-width'))
   // > boxWidth
+
+  console.log(jstrs.camelCase('boxWidth'))
+  // > boxWidth
+  ```
+  * @example camelCase():Upper
+  ```js
+  console.log(jstrs.camelCase('FOÈ-BAR'))
+  // > foèBar
+  console.log(jstrs.camelCase('FBBazzy'))
+  // > fbBazzy
   ```
   * @example camelCase():Upper & _
   ```js
@@ -17,7 +28,7 @@
   * @example camelCase():First char is _
   ```js
   console.log(jstrs.camelCase('_BOX_WIDTH'))
-  // > BoxWidth
+  // > boxWidth
   ```
   * @example camelCase():none
   ```js
@@ -34,14 +45,16 @@ function camelCase(text: string): string {
   if (typeof text !== 'string') { // 非字符串直接返回
     return text
   }
-  let result = text.toLowerCase()
-  if (text.indexOf('_') >= 0 || text.indexOf('-') >= 0) {
-    result = result.replace(/[-_]+([a-z])/ig, (...params: string[]) => {
-      let letter = params[1]
-      return letter.toUpperCase()
+
+  return text.replace(/([a-z][^A-Z]*)([A-Z])|([A-Z])([A-Z][a-z])/g, (all, $1, $2, $3, $4) => {
+    all
+    return ($1 || $3) + '-' + ($2 || $4)
+  }).replace(/^[_.\- ]+/, '')
+    .toLowerCase()
+    .replace(/[_.\- ]+(\w|$)/g, (all, $1) => {
+      all
+      return $1.toUpperCase()
     })
-  }
-  return result
 } /*</function>*/
 
 export {
