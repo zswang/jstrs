@@ -4,8 +4,8 @@
  * String functions
  * @author
  *   zswang (http://weibo.com/zswang)
- * @version 1.1.0
- * @date 2017-11-03
+ * @version 1.1.3
+ * @date 2017-11-04
   */
 /**
  * 进行 bas64 解码
@@ -45,6 +45,7 @@ export { base64URIDecode, base64URIEncode };
  *
  * @param text 字符串
  * @return 返回驼峰字符串
+ * @see https://github.com/sindresorhus/camelcase
  * @example camelCase():base
   ```js
   console.log(jstrs.camelCase('box-width'))
@@ -77,7 +78,7 @@ export { base64URIDecode, base64URIEncode };
   * @example camelCase():Number
   ```js
   console.log(JSON.stringify(jstrs.camelCase(123)))
-  // > 123
+  // > "123"
   ```
   */
 declare function camelCase(text: string): string;

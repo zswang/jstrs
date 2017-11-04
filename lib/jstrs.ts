@@ -4,8 +4,8 @@
  * String functions
  * @author
  *   zswang (http://weibo.com/zswang)
- * @version 1.1.0
- * @date 2017-11-03
+ * @version 1.1.3
+ * @date 2017-11-04
   */
 /*<function name="base64URIDecode" depend="decodeUTF8">*/
 /**
@@ -64,6 +64,7 @@ export {
  *
  * @param text 字符串
  * @return 返回驼峰字符串
+ * @see https://github.com/sindresorhus/camelcase
  * @example camelCase():base
   ```js
   console.log(jstrs.camelCase('box-width'))
@@ -96,14 +97,11 @@ export {
   * @example camelCase():Number
   ```js
   console.log(JSON.stringify(jstrs.camelCase(123)))
-  // > 123
+  // > "123"
   ```
   */
 function camelCase(text: string): string {
-  if (typeof text !== 'string') { // 非字符串直接返回
-    return text
-  }
-  return text.replace(/([a-z][^A-Z]*)([A-Z])|([A-Z])([A-Z][a-z])/g, (all, $1, $2, $3, $4) => {
+  return String(text).replace(/([a-z][^A-Z]*)([A-Z])|([A-Z])([A-Z][a-z])/g, (all, $1, $2, $3, $4) => {
     all
     return ($1 || $3) + '-' + ($2 || $4)
   }).replace(/^[_.\- ]+/, '')

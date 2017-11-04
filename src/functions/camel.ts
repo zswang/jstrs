@@ -38,15 +38,11 @@
   * @example camelCase():Number
   ```js
   console.log(JSON.stringify(jstrs.camelCase(123)))
-  // > 123
+  // > "123"
   ```
   */
 function camelCase(text: string): string {
-  if (typeof text !== 'string') { // 非字符串直接返回
-    return text
-  }
-
-  return text.replace(/([a-z][^A-Z]*)([A-Z])|([A-Z])([A-Z][a-z])/g, (all, $1, $2, $3, $4) => {
+  return String(text).replace(/([a-z][^A-Z]*)([A-Z])|([A-Z])([A-Z][a-z])/g, (all, $1, $2, $3, $4) => {
     all
     return ($1 || $3) + '-' + ($2 || $4)
   }).replace(/^[_.\- ]+/, '')

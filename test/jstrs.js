@@ -75,7 +75,7 @@ describe("lib/jstrs.js", function () {
   it("camelCase():Number", function() {
     examplejs_printLines = [];
       examplejs_print(JSON.stringify(jstrs.camelCase(123)))
-      assert.equal(examplejs_printLines.join("\n"), "123"); examplejs_printLines = [];
+      assert.equal(examplejs_printLines.join("\n"), "\"123\""); examplejs_printLines = [];
   });
   it("format():array", function() {
     examplejs_printLines = [];
