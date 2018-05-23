@@ -42,17 +42,18 @@
   ```
   */
 function camelCase(text: string): string {
-  return String(text).replace(/([a-z][^A-Z]*)([A-Z])|([A-Z])([A-Z][a-z])/g, (all, $1, $2, $3, $4) => {
-    all
-    return ($1 || $3) + '-' + ($2 || $4)
-  }).replace(/^[_.\- ]+/, '')
+  return String(text)
+    .replace(
+      /([a-z][^A-Z]*)([A-Z])|([A-Z])([A-Z][a-z])/g,
+      (...params: string[]) => {
+        return (params[1] || params[3]) + '-' + (params[2] || params[4])
+      }
+    )
+    .replace(/^[_.\- ]+/, '')
     .toLowerCase()
-    .replace(/[_.\- ]+(\w|$)/g, (all, $1) => {
-      all
-      return $1.toUpperCase()
+    .replace(/[_.\- ]+(\w|$)/g, (...params: string[]) => {
+      return params[1].toUpperCase()
     })
 } /*</function>*/
 
-export {
-  camelCase,
-}
+export { camelCase }

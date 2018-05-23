@@ -15,10 +15,7 @@
   ```
   */
 function encodeUTF8(str: string): string {
-  if (/[\u0080-\uffff]/.test(str)) {
-    return unescape(encodeURIComponent(str))
-  }
-  return str
+  return unescape(encodeURIComponent(str))
 } /*</function>*/
 
 /*<function name="decodeUTF8">*/
@@ -38,17 +35,10 @@ function encodeUTF8(str: string): string {
   ```
   */
 function decodeUTF8(str: string): string {
-  if (/[\u00c0-\u00df][\u0080-\u00bf]/.test(str) ||
-    /[\u00e0-\u00ef][\u0080-\u00bf][\u0080-\u00bf]/.test(str)) {
-    return decodeURIComponent(escape(str))
-  }
-  return str
+  return decodeURIComponent(escape(str))
 } /*</function>*/
 
-export {
-  encodeUTF8,
-  decodeUTF8,
-}
+export { encodeUTF8, decodeUTF8 }
 
 declare function unescape(s: string): string
 declare function escape(s: string): string

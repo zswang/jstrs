@@ -5,12 +5,12 @@
 let htmlDecodeDict: {
   [key: string]: string
 } = {
-    'quot': '"',
-    'lt': '<',
-    'gt': '>',
-    'amp': '&',
-    'nbsp': '\u00a0',
-  }
+  quot: '"',
+  lt: '<',
+  gt: '>',
+  amp: '&',
+  nbsp: '\u00a0',
+}
 /**
  * HTML解码
  *
@@ -28,14 +28,16 @@ let htmlDecodeDict: {
   */
 function decodeHTML(html: string): string {
   return html.replace(
-    /&((quot|lt|gt|amp|nbsp)|#x([a-f\d]+)|#(\d+));/ig,
+    /&((quot|lt|gt|amp|nbsp)|#x([a-f\d]+)|#(\d+));/gi,
     (...params: string[]) => {
       let key = params[2]
       let hex = params[3]
       let dec = params[4]
-      return key ? htmlDecodeDict[key.toLowerCase()] :
-        hex ? String.fromCharCode(parseInt(hex, 16)) :
-          String.fromCharCode(+dec)
+      return key
+        ? htmlDecodeDict[key.toLowerCase()]
+        : hex
+          ? String.fromCharCode(parseInt(hex, 16))
+          : String.fromCharCode(+dec)
     }
   )
 } /*</function>*/
@@ -44,13 +46,13 @@ function decodeHTML(html: string): string {
 let htmlEncodeDict: {
   [key: string]: string
 } = {
-    '"': '#34',
-    "'": '#39',
-    '<': 'lt',
-    '>': 'gt',
-    '&': 'amp',
-    '\u00a0': 'nbsp',
-  }
+  '"': '#34',
+  "'": '#39',
+  '<': 'lt',
+  '>': 'gt',
+  '&': 'amp',
+  '\u00a0': 'nbsp',
+}
 /**
  * HTML编码
  *
@@ -67,12 +69,9 @@ let htmlEncodeDict: {
   ```
   */
 function encodeHTML(text: string): string {
-  return String(text).replace(/["<>& ']/g, (all) => {
+  return String(text).replace(/["<>& ']/g, all => {
     return '&' + htmlEncodeDict[all] + ';'
   })
 } /*</function>*/
 
-export {
-  encodeHTML,
-  decodeHTML,
-}
+export { encodeHTML, decodeHTML }

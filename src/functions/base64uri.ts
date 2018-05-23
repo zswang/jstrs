@@ -19,7 +19,19 @@ import { decodeUTF8, encodeUTF8 } from './utf8'
    ```
  */
 function base64URIDecode(data: string): string {
-  return decodeUTF8(atob(String(data).replace('-', '+').replace('_', '/')))
+  let dict: {
+    [key: string]: string
+  } = {
+    '-': '+',
+    _: '/',
+  }
+  return decodeUTF8(
+    atob(
+      String(data).replace(/[\-_]/g, all => {
+        return dict[all]
+      })
+    )
+  )
 } /*</function>*/
 
 /*<function name="base64URIDecode" depend="encodeUTF8">*/
@@ -44,16 +56,13 @@ function base64URIEncode(data: string): string {
   let dict: {
     [key: string]: string
   } = {
-      '+': '-',
-      '/': '_',
-      '=': ''
-    }
-  return btoa(encodeUTF8(data)).replace(/[+/=]/g, (all) => {
+    '+': '-',
+    '/': '_',
+    '=': '',
+  }
+  return btoa(encodeUTF8(data)).replace(/[+/=]/g, all => {
     return dict[all]
   })
 } /*</function>*/
 
-export {
-  base64URIDecode,
-  base64URIEncode,
-}
+export { base64URIDecode, base64URIEncode }

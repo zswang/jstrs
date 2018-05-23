@@ -4,8 +4,8 @@
  * String functions
  * @author
  *   zswang (http://weibo.com/zswang)
- * @version 1.1.3
- * @date 2017-11-04
+ * @version 1.1.7
+ * @date 2018-05-23
   */
 /*<function name="base64URIDecode" depend="decodeUTF8">*/
 /**
@@ -24,7 +24,19 @@
    ```
  */
 function base64URIDecode(data: string): string {
-  return decodeUTF8(atob(String(data).replace('-', '+').replace('_', '/')))
+  let dict: {
+    [key: string]: string
+  } = {
+    '-': '+',
+    _: '/',
+  }
+  return decodeUTF8(
+    atob(
+      String(data).replace(/[\-_]/g, all => {
+        return dict[all]
+      })
+    )
+  )
 } /*</function>*/
 /*<function name="base64URIDecode" depend="encodeUTF8">*/
 /**
@@ -46,18 +58,15 @@ function base64URIEncode(data: string): string {
   let dict: {
     [key: string]: string
   } = {
-      '+': '-',
-      '/': '_',
-      '=': ''
-    }
-  return btoa(encodeUTF8(data)).replace(/[+/=]/g, (all) => {
+    '+': '-',
+    '/': '_',
+    '=': '',
+  }
+  return btoa(encodeUTF8(data)).replace(/[+/=]/g, all => {
     return dict[all]
   })
 } /*</function>*/
-export {
-  base64URIDecode,
-  base64URIEncode,
-}
+export { base64URIDecode, base64URIEncode }
   /*<function name="camelCase">*/
 /**
  * 将字符串转换为驼峰命名
@@ -101,19 +110,20 @@ export {
   ```
   */
 function camelCase(text: string): string {
-  return String(text).replace(/([a-z][^A-Z]*)([A-Z])|([A-Z])([A-Z][a-z])/g, (all, $1, $2, $3, $4) => {
-    all
-    return ($1 || $3) + '-' + ($2 || $4)
-  }).replace(/^[_.\- ]+/, '')
+  return String(text)
+    .replace(
+      /([a-z][^A-Z]*)([A-Z])|([A-Z])([A-Z][a-z])/g,
+      (...params: string[]) => {
+        return (params[1] || params[3]) + '-' + (params[2] || params[4])
+      }
+    )
+    .replace(/^[_.\- ]+/, '')
     .toLowerCase()
-    .replace(/[_.\- ]+(\w|$)/g, (all, $1) => {
-      all
-      return $1.toUpperCase()
+    .replace(/[_.\- ]+(\w|$)/g, (...params: string[]) => {
+      return params[1].toUpperCase()
     })
 } /*</function>*/
-export {
-  camelCase,
-}
+export { camelCase }
   /*<function name="format">*/
 /**
  * 格式化函数
@@ -155,9 +165,13 @@ export {
   ```
   '''</jdists>'''
  */
-function format(template: string | Function, json: { [key: string]: any }): string {
+function format(
+  template: string | Function,
+  json: { [key: string]: any }
+): string {
   /*<funcTemplate>*/
-  if (typeof template === 'function') { // 函数多行注释处理
+  if (typeof template === 'function') {
+    // 函数多行注释处理
     template = String(template).replace(
       /[^]*\/\*!?\s*|\s*\*\/[^]*/g, // 替换掉函数前后部分
       ''
@@ -166,12 +180,10 @@ function format(template: string | Function, json: { [key: string]: any }): stri
   /*</funcTemplate>*/
   return template.replace(/#\{(.*?)\}/g, (...params: string[]) => {
     let key = params[1]
-    return json && (key in json) ? json[key] : ''
+    return json && key in json ? json[key] : ''
   })
 } /*</function>*/
-export {
-  format,
-}
+export { format }
   /*<function name="decodeHTML">*/
 /**
  * html编码转换字典
@@ -179,12 +191,12 @@ export {
 let htmlDecodeDict: {
   [key: string]: string
 } = {
-    'quot': '"',
-    'lt': '<',
-    'gt': '>',
-    'amp': '&',
-    'nbsp': '\u00a0',
-  }
+  quot: '"',
+  lt: '<',
+  gt: '>',
+  amp: '&',
+  nbsp: '\u00a0',
+}
 /**
  * HTML解码
  *
@@ -202,14 +214,16 @@ let htmlDecodeDict: {
   */
 function decodeHTML(html: string): string {
   return html.replace(
-    /&((quot|lt|gt|amp|nbsp)|#x([a-f\d]+)|#(\d+));/ig,
+    /&((quot|lt|gt|amp|nbsp)|#x([a-f\d]+)|#(\d+));/gi,
     (...params: string[]) => {
       let key = params[2]
       let hex = params[3]
       let dec = params[4]
-      return key ? htmlDecodeDict[key.toLowerCase()] :
-        hex ? String.fromCharCode(parseInt(hex, 16)) :
-          String.fromCharCode(+dec)
+      return key
+        ? htmlDecodeDict[key.toLowerCase()]
+        : hex
+          ? String.fromCharCode(parseInt(hex, 16))
+          : String.fromCharCode(+dec)
     }
   )
 } /*</function>*/
@@ -217,13 +231,13 @@ function decodeHTML(html: string): string {
 let htmlEncodeDict: {
   [key: string]: string
 } = {
-    '"': '#34',
-    "'": '#39',
-    '<': 'lt',
-    '>': 'gt',
-    '&': 'amp',
-    '\u00a0': 'nbsp',
-  }
+  '"': '#34',
+  "'": '#39',
+  '<': 'lt',
+  '>': 'gt',
+  '&': 'amp',
+  '\u00a0': 'nbsp',
+}
 /**
  * HTML编码
  *
@@ -240,14 +254,11 @@ let htmlEncodeDict: {
   ```
   */
 function encodeHTML(text: string): string {
-  return String(text).replace(/["<>& ']/g, (all) => {
+  return String(text).replace(/["<>& ']/g, all => {
     return '&' + htmlEncodeDict[all] + ';'
   })
 } /*</function>*/
-export {
-  encodeHTML,
-  decodeHTML,
-}
+export { encodeHTML, decodeHTML }
   /*<function name="encodeUTF8">*/
 /**
  * 对字符串进行 utf8 编码
@@ -265,10 +276,7 @@ export {
   ```
   */
 function encodeUTF8(str: string): string {
-  if (/[\u0080-\uffff]/.test(str)) {
-    return unescape(encodeURIComponent(str))
-  }
-  return str
+  return unescape(encodeURIComponent(str))
 } /*</function>*/
 /*<function name="decodeUTF8">*/
 /**
@@ -287,15 +295,8 @@ function encodeUTF8(str: string): string {
   ```
   */
 function decodeUTF8(str: string): string {
-  if (/[\u00c0-\u00df][\u0080-\u00bf]/.test(str) ||
-    /[\u00e0-\u00ef][\u0080-\u00bf][\u0080-\u00bf]/.test(str)) {
-    return decodeURIComponent(escape(str))
-  }
-  return str
+  return decodeURIComponent(escape(str))
 } /*</function>*/
-export {
-  encodeUTF8,
-  decodeUTF8,
-}
+export { encodeUTF8, decodeUTF8 }
 declare function unescape(s: string): string
 declare function escape(s: string): string

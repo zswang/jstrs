@@ -4,8 +4,8 @@
  * String functions
  * @author
  *   zswang (http://weibo.com/zswang)
- * @version 1.1.3
- * @date 2017-11-04
+ * @version 1.1.7
+ * @date 2018-05-23
   */
 /**
  * 进行 bas64 解码

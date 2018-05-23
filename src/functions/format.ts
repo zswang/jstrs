@@ -39,9 +39,13 @@
   ```
   '''</jdists>'''
  */
-function format(template: string | Function, json: { [key: string]: any }): string {
+function format(
+  template: string | Function,
+  json: { [key: string]: any }
+): string {
   /*<funcTemplate>*/
-  if (typeof template === 'function') { // 函数多行注释处理
+  if (typeof template === 'function') {
+    // 函数多行注释处理
     template = String(template).replace(
       /[^]*\/\*!?\s*|\s*\*\/[^]*/g, // 替换掉函数前后部分
       ''
@@ -51,10 +55,8 @@ function format(template: string | Function, json: { [key: string]: any }): stri
 
   return template.replace(/#\{(.*?)\}/g, (...params: string[]) => {
     let key = params[1]
-    return json && (key in json) ? json[key] : ''
+    return json && key in json ? json[key] : ''
   })
 } /*</function>*/
 
-export {
-  format,
-}
+export { format }
